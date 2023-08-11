@@ -1,6 +1,7 @@
-import { createSlice, isAnyOf } from '@reduxjs/toolkit';
+import { combineReducers, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { initialState } from './initialState';
 import { deleteContact, fetchContacts, addContact } from './operations';
+import { authReducer } from './authReduser';
 
 const contactSlice = createSlice({
   name: 'contacts',
@@ -49,4 +50,5 @@ const handleRejected = (state, action) => {
 const getActions = type => [fetchContacts, addContact, deleteContact].map(action => action[type]);
 
 export const { setFilter } = contactSlice.actions;
-export default contactSlice.reducer;
+const rootReducer = combineReducers({contacts: contactSlice.reducer, auth: authReducer})
+export default rootReducer;

@@ -1,6 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { initialState } from "redux/initialState";
-const { login } = require("servises/authorization");
+import { login } from "servises/authorization";
+
+const authState = {
+  token: '',
+  isLoading: false,
+  error: '',
+}
 
 const loginThunk = createAsyncThunk('users/login', async (body) => {
     return await login(body)
@@ -8,7 +13,7 @@ const loginThunk = createAsyncThunk('users/login', async (body) => {
 
 const handleFulfilled = (state, action )=> {
     state.isLoading = false;
-    state.error = '';
+    state.error = null;
     state.token = action.payload.token;
 };
 
@@ -25,7 +30,7 @@ const handleRejected = (state, action) => {
 
 const authSlice = createSlice({
     name: 'auth',
-    initialState,
+  initialState: authState,
     extraReducers: (builder) => {
         builder
             .addCase(loginThunk.pending, handlePending)

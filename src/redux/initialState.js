@@ -5,5 +5,4 @@ export const initialState = {
     error: null,
   },
   filter: '',
-  token: '',
 };
