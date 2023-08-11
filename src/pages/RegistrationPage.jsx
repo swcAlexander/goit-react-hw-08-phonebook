@@ -15,6 +15,7 @@ const RegistrationPage = () => {
             password: e.target.elements.password.value,
         }
         signUp(newUser).then(() => { toast.success('Created'); navigate('/pages/Login')}).catch((error)=> toast.error(error.message))
+        // signUp(newUser).then((responce) => console.log(responce.data) )
 
 
     }
