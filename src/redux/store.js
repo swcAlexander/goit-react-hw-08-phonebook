@@ -7,10 +7,22 @@ import {
   PURGE,
   REGISTER,
 } from 'redux-persist';
-import rootReducer from 'redux/contactsReducer';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import { contactReducer } from 'redux/contactsReducer';
+import { authReducer } from './authReduser';
+
+const persistConfig = {
+  key: 'auth',
+  storage,
+  whilelist: ['token'],
+};
 
 const store = configureStore({
-  reducer: rootReducer,
+  reducer: {
+    auth: persistReducer(persistConfig, authReducer),
+    contacts: contactReducer,
+  },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: {
@@ -18,5 +30,7 @@ const store = configureStore({
       },
     }),
 });
+
+export const persistor = persistStore(store);
 
 export default store;

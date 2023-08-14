@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { ContactList } from 'components/ContactList/ContactList';
@@ -7,12 +7,13 @@ import { ContactForm } from 'components/ContactForm/ContactForm';
 import { Filter } from 'components/Filter/Filter';
 import { fetchContacts } from 'redux/operations';
 import { Loader } from 'components/Loader/Loader';
+import { selectContacts, selectLoading } from 'redux/selectors';
 import style from 'components/Apx.module.css';
-import { initialState } from 'redux/initialState';
 
 const PhoneBook = () => {
   const dispatch = useDispatch();
-  const { contacts, isLoading } = initialState;
+  const contacts = useSelector(selectContacts);
+  const isLoading = useSelector(selectLoading);
 
   useEffect(() => {
     dispatch(fetchContacts());
@@ -23,12 +24,12 @@ const PhoneBook = () => {
       <ContactForm />
       <h2>Contacts</h2>
       {isLoading && <Loader />}
-      {contacts.items.length > 0 ? (
+      {contacts.length > 0 ? (
         <Filter />
       ) : (
         <p>Your phonebook is empty. Add first contact!</p>
       )}
-      {contacts.items.length > 0 && <ContactList />}
+      {contacts.length > 0 && <ContactList />}
     </div>
   );
 };

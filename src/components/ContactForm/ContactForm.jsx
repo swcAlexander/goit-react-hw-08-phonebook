@@ -8,39 +8,41 @@ import { selectContacts } from 'redux/selectors';
 export const ContactForm = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
+  const contacts = useSelector(selectContacts);
   const dispatch = useDispatch();
-
-  const contactsItems = useSelector(selectContacts);
 
   const handleChange = e => {
     const { name, value } = e.currentTarget;
-    if (name === 'name') {
-      setName(value);
-    } else if (name === 'number') {
-      setNumber(value);
+    switch (name) {
+      case 'name':
+        setName(value);
+        break;
+      case 'number':
+        setNumber(value);
+        break;
+      default:
+        return;
     }
   };
 
   const handleSubmit = e => {
-  e.preventDefault();
-  if (name.trim() === '' || number.trim() === '') {
-    toast.error('Please fill in all fields');
-    return;
-  }
-  const contact = { name, number };
-  const existingContact = contactsItems.find(
-    item => item.name.toLowerCase() === contact.name.toLowerCase()
-  );
+    e.preventDefault();
+    if (name.trim() === '' || number.trim() === '') {
+      toast.error('Please fill in all fields');
+      return;
+    }
+    const isInContacts = contacts.find(
+      contact => contact.name.toLowerCase() === name.toLowerCase()
+    );
+    if (isInContacts) {
+      toast.error(`${name} is on contacts`);
 
-  if (existingContact) {
-    toast.error('The contact is already in the contact book!');
-    return;
-  }
+      return;
+    }
 
-  
-  dispatch(addContact(contact));
-  reset();
-};
+    dispatch(addContact({ name, number }));
+    reset();
+  };
 
   const reset = () => {
     setName('');

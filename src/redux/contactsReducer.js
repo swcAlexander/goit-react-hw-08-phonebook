@@ -1,7 +1,12 @@
-import { combineReducers, createSlice, isAnyOf } from '@reduxjs/toolkit';
-import { initialState } from './initialState';
+import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { deleteContact, fetchContacts, addContact } from './operations';
-import { authReducer } from './authReduser';
+
+export const initialState = {
+  contacts: [],
+  isLoading: false,
+  error: null,
+  filter: '',
+};
 
 const contactSlice = createSlice({
   name: 'contacts',
@@ -28,7 +33,7 @@ const contactSlice = createSlice({
       })
       .addMatcher(isAnyOf(...getActions('fulfilled')), handleFulfilled)
       .addMatcher(isAnyOf(...getActions('pending')), handlePending)
-      .addMatcher(isAnyOf(...getActions('rejected')), handleRejected)
+      .addMatcher(isAnyOf(...getActions('rejected')), handleRejected);
   },
 });
 
@@ -47,8 +52,9 @@ const handleRejected = (state, action) => {
   state.contacts.error = action.payload;
 };
 
-const getActions = type => [fetchContacts, addContact, deleteContact].map(action => action[type]);
+const getActions = type =>
+  [fetchContacts, addContact, deleteContact].map(action => action[type]);
 
 export const { setFilter } = contactSlice.actions;
-const rootReducer = combineReducers({contacts: contactSlice.reducer, auth: authReducer})
-export default rootReducer;
+
+export const contactReducer = contactSlice.reducer;

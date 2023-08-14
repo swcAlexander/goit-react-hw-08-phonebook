@@ -1,56 +1,71 @@
-import { createAsyncThunk, createSlice, isAllOf } from '@reduxjs/toolkit';
-import { getProfile, login } from 'servises/authorization';
+import { createSlice } from '@reduxjs/toolkit';
+import {
+  loginThunk,
+  logOutUserThunk,
+  refreshUserThunk,
+  registerThunk,
+} from 'redux/operations';
 
-export const authState = {
-  token: '',
+export const initialState = {
+  token: null,
   isLoading: false,
-  error: '',
-  profile: '',
-};
-
-export const loginThunk = createAsyncThunk('users/login', async body => {
-  return await login(body);
-});
-const getProfileThunk = createAsyncThunk('users/login', async () => {
-  return await getProfile();
-});
-
-const handleFulfilled = (state, action) => {
-  state.isLoading = false;
-  state.error = null;
-  state.token = action.payload.token;
+  error: null,
+  profile: null,
+  isAuth: false,
 };
 
 const handlePending = state => {
   state.isLoading = true;
+  state.error = null;
+  state.isAuth = false;
 };
 
 const handleRejected = (state, action) => {
   state.isLoading = false;
   state.error = action.payload;
+  state.isAuth = false;
 };
-
-// const handleFulfilledProfile = (state, action) => {
-//   state.isLoading = false;
-//   state.error = '';
-//   state.profile = action.payload;
-// };
 
 const authSlice = createSlice({
   name: 'auth',
-  initialState: authState,
+  initialState,
   extraReducers: builder => {
     builder
-      .addCase(loginThunk.fulfilled, handleFulfilled)
-      // .addCase(getProfileThunk.fulfilled, handleFulfilledProfile)
-      .addMatcher(
-        isAllOf(loginThunk.pending, getProfileThunk.pending),
-        handlePending
-      )
-      .addMatcher(
-        isAllOf(loginThunk.rejected, getProfileThunk.rejected),
-        handleRejected
-      );
+      .addCase(registerThunk.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+        state.isAuth = true;
+        state.token = action.payload.token;
+        state.profile = action.payload.user;
+      })
+      .addCase(registerThunk.pending, handlePending)
+      .addCase(registerThunk.rejected, handleRejected)
+      .addCase(loginThunk.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+        state.isAuth = true;
+        state.token = action.payload.token;
+        state.profile = action.payload.user;
+      })
+      .addCase(loginThunk.pending, handlePending)
+      .addCase(loginThunk.rejected, handleRejected)
+      .addCase(refreshUserThunk.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+        state.isAuth = true;
+        state.profile = action.payload;
+      })
+      .addCase(refreshUserThunk.pending, handlePending)
+      .addCase(refreshUserThunk.rejected, handleRejected)
+      .addCase(logOutUserThunk.fulfilled, state => {
+        state.isLoading = false;
+        state.error = null;
+        state.isAuth = false;
+        state.profile = null;
+        state.token = null;
+      })
+      .addCase(logOutUserThunk.pending, handlePending)
+      .addCase(logOutUserThunk.rejected, handleRejected);
   },
 });
 
