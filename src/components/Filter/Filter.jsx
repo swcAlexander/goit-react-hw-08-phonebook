@@ -2,7 +2,7 @@ import React from 'react';
 import { nanoid } from 'nanoid';
 import { selectFilter } from 'redux/selectors';
 import { useSelector, useDispatch } from 'react-redux';
-import { setFilter } from 'redux/reducer';
+import { setFilter } from 'redux/contactsReducer';
 
 export const Filter = () => {
   const value = useSelector(selectFilter);

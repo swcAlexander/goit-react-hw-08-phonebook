@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { ContactList } from 'components/ContactList/ContactList';
@@ -30,7 +29,6 @@ const PhoneBook = () => {
         <p>Your phonebook is empty. Add first contact!</p>
       )}
       {contacts.items.length > 0 && <ContactList />}
-      <ToastContainer autoClose={3000} />
     </div>
   );
 };

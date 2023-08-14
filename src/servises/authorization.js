@@ -5,11 +5,11 @@ const instance = axios.create({
 });
 
 const setToken = token => {
-  instance.defaults.headers.common['Authorization'] = token;
+  instance.defaults.headers['Authorization'] = `Bearer ${token}`;
 };
 
 export const dellToken = () => {
-  delete instance.defaults.headers.common['Authorization'];
+  instance.defaults.headers['Authorization']='';
 };
 
 export const signUp = async body => {

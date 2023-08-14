@@ -7,7 +7,7 @@ import {
   PURGE,
   REGISTER,
 } from 'redux-persist';
-import rootReducer from 'redux/reducer';
+import rootReducer from 'redux/contactsReducer';
 
 const store = configureStore({
   reducer: rootReducer,

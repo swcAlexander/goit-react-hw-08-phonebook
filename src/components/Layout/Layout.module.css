@@ -15,9 +15,17 @@
 
   letter-spacing: 0.03em;
 
+  background-color: cadetblue;
   border: 2px solid rgba(16, 128, 109, 0.412);
   border-radius: 8px;
   padding: 10px;
+}
+.layout_list a:hover,
+.layout_list a:focus
+.homepage:hover,
+.homepage:focus {
+  background-color: yellowgreen;
+
 }
 
 .layout_list {
@@ -25,4 +33,7 @@
   list-style: none;
   gap: 30px;
   margin-left: auto;
+}
+.header {
+  border: 1px solid #282830;
 }
