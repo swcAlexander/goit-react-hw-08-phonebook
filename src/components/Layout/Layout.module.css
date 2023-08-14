@@ -1,6 +1,28 @@
+.layout_navigation {
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  border: 2px color(srgb 0 0 0);
+}
+.homepage,
+.layout_list a {
+  list-style: none;
+  text-decoration: none;
+  color: #282830;
+
+  font-weight: 500;
+  font-size: 20px;
+
+  letter-spacing: 0.03em;
+
+  border: 2px solid rgba(16, 128, 109, 0.412);
+  border-radius: 8px;
+  padding: 10px;
+}
+
 .layout_list {
-    display: flex;
-    text-decoration: none;
-    list-style: none;
-    gap: 30px;
+  display: flex;
+  list-style: none;
+  gap: 30px;
+  margin-left: auto;
 }

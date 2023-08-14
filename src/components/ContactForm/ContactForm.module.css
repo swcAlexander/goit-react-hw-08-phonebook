@@ -1,7 +1,4 @@
 .contactForm {
-  width: 320px;
-  height: 250px;
-  background: #fff;
   border-radius: 10px;
   margin: 5% auto;
   padding: 20px;
@@ -10,10 +7,10 @@
 
 .contactFormHeader {
   margin: 0;
-  background-color: #282830;
+  background-color: #1dabb8;
   border-radius: 10px 10px 0 0;
   color: #fff;
-  font-size: 14px;
+  font-size: 18px;
   padding: 20px;
   text-align: center;
   text-transform: uppercase;
