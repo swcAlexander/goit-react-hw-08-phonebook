@@ -7,17 +7,18 @@ import { ContactForm } from 'components/ContactForm/ContactForm';
 import { Filter } from 'components/Filter/Filter';
 import { fetchContacts } from 'redux/operations';
 import { Loader } from 'components/Loader/Loader';
-import { selectContacts, selectLoading } from 'redux/selectors';
+import { selectContacts, selectLoading, selectUserToken } from 'redux/selectors';
 import style from 'components/Apx.module.css';
 
 const PhoneBook = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(selectContacts);
   const isLoading = useSelector(selectLoading);
+  const token = useSelector(selectUserToken);
 
   useEffect(() => {
-    dispatch(fetchContacts());
-  }, [dispatch]);
+    dispatch(fetchContacts(token));
+  }, [dispatch, token]);
 
   return (
     <div className={style.container}>

@@ -11,13 +11,14 @@ export const setToken = token => {
 };
 
 export const dellToken = () => {
-  axios.defaults.headers['Authorization'] = '';
+  axios.defaults.headers.common['Authorization'] = '';
 };
 
 export const fetchContacts = createAsyncThunk(
   'contacts/fetchAll',
-  async (_, thunkAPI) => {
+  async (token, thunkAPI) => {
     try {
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       const response = await instance.get(`/contacts`);
       return response.data;
     } catch (error) {
@@ -96,9 +97,9 @@ export const logOutUserThunk = createAsyncThunk(
   'auth/logoutUser',
   async (_, thunkAPI) => {
     try {
-      await instance.post('/users/logout');
+      const { data } = await instance.post('/users/logout');
       dellToken();
-      localStorage.clear();
+      return data
     } catch (error) {
       console.log(error);
       return toast.error(error.responce.data);

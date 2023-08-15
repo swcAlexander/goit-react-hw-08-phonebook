@@ -15,7 +15,7 @@ import { authReducer } from './authReduser';
 const persistConfig = {
   key: 'auth',
   storage,
-  whilelist: ['token'],
+  whitelist: ['token', 'isAuth'],
 };
 
 const store = configureStore({
@@ -29,6 +29,7 @@ const store = configureStore({
         ignoreActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
     }),
+   devTools: process.env.NODE_ENV === 'developent',
 });
 
 export const persistor = persistStore(store);

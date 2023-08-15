@@ -21,7 +21,7 @@ const App = () => {
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route
-          path="/contacts"
+          index
           element={<LazyPhonebook redirectTo="/contacts" />}
         />
         <Route

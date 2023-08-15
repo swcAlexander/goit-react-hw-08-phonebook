@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 import {
   loginThunk,
   logOutUserThunk,
@@ -6,7 +6,7 @@ import {
   registerThunk,
 } from 'redux/operations';
 
-export const initialState = {
+export const authState = {
   token: null,
   isLoading: false,
   error: null,
@@ -28,7 +28,7 @@ const handleRejected = (state, action) => {
 
 const authSlice = createSlice({
   name: 'auth',
-  initialState,
+  initialState: authState,
   extraReducers: builder => {
     builder
       .addCase(registerThunk.fulfilled, (state, action) => {
@@ -38,8 +38,6 @@ const authSlice = createSlice({
         state.token = action.payload.token;
         state.profile = action.payload.user;
       })
-      .addCase(registerThunk.pending, handlePending)
-      .addCase(registerThunk.rejected, handleRejected)
       .addCase(loginThunk.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
@@ -47,26 +45,24 @@ const authSlice = createSlice({
         state.token = action.payload.token;
         state.profile = action.payload.user;
       })
-      .addCase(loginThunk.pending, handlePending)
-      .addCase(loginThunk.rejected, handleRejected)
       .addCase(refreshUserThunk.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
         state.isAuth = true;
         state.profile = action.payload;
       })
-      .addCase(refreshUserThunk.pending, handlePending)
-      .addCase(refreshUserThunk.rejected, handleRejected)
       .addCase(logOutUserThunk.fulfilled, state => {
         state.isLoading = false;
         state.error = null;
         state.isAuth = false;
-        state.profile = null;
-        state.token = null;
+        state.profile = '';
+        state.token = '';
       })
-      .addCase(logOutUserThunk.pending, handlePending)
-      .addCase(logOutUserThunk.rejected, handleRejected);
+      .addMatcher(isAnyOf(...getActions('pending')), handlePending)
+      .addMatcher(isAnyOf(...getActions('rejected')), handleRejected)
   },
 });
+const getActions = type =>
+  [registerThunk, loginThunk, refreshUserThunk].map(action => action[type]);
 
 export const authReducer = authSlice.reducer;

@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { loginThunk } from 'redux/operations';
 import styles from './Form.module.css';
-import { selectUserToken } from 'redux/selectors';
+import { selectAuthorization} from 'redux/selectors';
 
 export const LoginForm = () => {
-  const isAuth = useSelector(selectUserToken);
+  const isAuth = useSelector(selectAuthorization);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   dispatch(() => {
