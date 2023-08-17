@@ -21,11 +21,9 @@
   padding: 10px;
 }
 .layout_list a:hover,
-.layout_list a:focus
-.homepage:hover,
+.layout_list a:focus .homepage:hover,
 .homepage:focus {
   background-color: yellowgreen;
-
 }
 
 .layout_list {
@@ -36,4 +34,11 @@
 }
 .header {
   border: 1px solid #282830;
+}
+.wellcome {
+  margin-left: 20px;
+  font-weight: 500;
+  font-size: 20px;
+
+  letter-spacing: 0.03em;
 }

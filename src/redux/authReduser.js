@@ -6,7 +6,7 @@ import {
   registerThunk,
 } from 'redux/operations';
 
-export const authState = {
+export const initialState = {
   token: null,
   isLoading: false,
   error: null,
@@ -28,7 +28,7 @@ const handleRejected = (state, action) => {
 
 const authSlice = createSlice({
   name: 'auth',
-  initialState: authState,
+  initialState,
   extraReducers: builder => {
     builder
       .addCase(registerThunk.fulfilled, (state, action) => {
@@ -59,7 +59,7 @@ const authSlice = createSlice({
         state.token = '';
       })
       .addMatcher(isAnyOf(...getActions('pending')), handlePending)
-      .addMatcher(isAnyOf(...getActions('rejected')), handleRejected)
+      .addMatcher(isAnyOf(...getActions('rejected')), handleRejected);
   },
 });
 const getActions = type =>

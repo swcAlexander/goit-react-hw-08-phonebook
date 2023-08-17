@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import style from 'components/ContactList/ContactItem/ContactItem.module.css';
+import style from 'components/ContactItem/ContactItem.module.css';
 import Proptypes from 'prop-types';
 import { deleteContact } from 'redux/operations';
 
@@ -9,9 +9,8 @@ export const ContactItem = ({ name, number, itemId }) => {
 
   const handleContactDelete = id => {
     dispatch(deleteContact(id));
-
   };
-  
+
   return (
     <li className={style.contactItem} key={itemId}>
       <span className={style.contactName}>{name}:</span>
