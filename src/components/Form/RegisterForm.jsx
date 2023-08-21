@@ -1,14 +1,11 @@
 import React from 'react';
 import { registerThunk } from 'redux/operations';
-import { useNavigate } from 'react-router-dom';
 import styles from './Form.module.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectUserData } from 'redux/selectors';
+import { useDispatch } from 'react-redux';
+
 
 export const RegisterForm = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const user = useSelector(selectUserData);
   const handleSubmit = e => {
     e.preventDefault();
     const form = e.currentTarget;
@@ -21,7 +18,6 @@ export const RegisterForm = () => {
     );
     form.reset();
 
-    user && navigate('/');
   };
   return (
     <form className={styles.reg_form} onSubmit={handleSubmit}>

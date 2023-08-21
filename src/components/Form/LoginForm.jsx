@@ -10,7 +10,7 @@ export const LoginForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   dispatch(() => {
-    isAuth && navigate('/');
+    isAuth && navigate('/contacts');
   }, [isAuth]);
   const handleSubmit = e => {
     e.preventDefault();
@@ -33,7 +33,6 @@ export const LoginForm = () => {
           typeof="email"
           placeholder="Please, input email"
           className={styles.reg_input}
-          requered
           id="exsampleInputEmail"
         />
       </div>
@@ -45,7 +44,6 @@ export const LoginForm = () => {
           typeof="password"
           placeholder="Please, input password"
           className={styles.reg_input}
-          requered
           minLength={7}
           id="exsampleInputPassword"
         />
