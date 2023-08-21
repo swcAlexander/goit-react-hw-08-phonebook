@@ -1,14 +1,21 @@
 import React from 'react';
 import { registerThunk } from 'redux/operations';
 import styles from './Form.module.css';
-import { useDispatch } from 'react-redux';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { selectAuthorization } from 'redux/selectors';
+import { useNavigate } from 'react-router-dom';
 
 export const RegisterForm = () => {
+  const isAuth = useSelector(selectAuthorization);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  dispatch(() => {
+    isAuth && navigate('/contacts');
+  }, [isAuth]);
   const handleSubmit = e => {
     e.preventDefault();
     const form = e.currentTarget;
+
     dispatch(
       registerThunk({
         name: form.elements.name.value,
@@ -17,7 +24,6 @@ export const RegisterForm = () => {
       })
     );
     form.reset();
-
   };
   return (
     <form className={styles.reg_form} onSubmit={handleSubmit}>

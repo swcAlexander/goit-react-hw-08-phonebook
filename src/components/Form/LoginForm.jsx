@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { loginThunk } from 'redux/operations';
 import styles from './Form.module.css';
-import { selectAuthorization} from 'redux/selectors';
+import { selectAuthorization } from 'redux/selectors';
 
 export const LoginForm = () => {
   const isAuth = useSelector(selectAuthorization);
@@ -34,6 +34,7 @@ export const LoginForm = () => {
           placeholder="Please, input email"
           className={styles.reg_input}
           id="exsampleInputEmail"
+          required
         />
       </div>
       <div className={styles.reg_container}>
@@ -46,6 +47,7 @@ export const LoginForm = () => {
           className={styles.reg_input}
           minLength={7}
           id="exsampleInputPassword"
+          required
         />
       </div>
       <button type="submit" className={styles.reg_button}>

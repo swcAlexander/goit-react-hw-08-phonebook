@@ -7,7 +7,11 @@ import { ContactForm } from 'components/ContactForm/ContactForm';
 import { Filter } from 'components/Filter/Filter';
 import { fetchContacts } from 'redux/operations';
 import { Loader } from 'components/Loader/Loader';
-import { selectContacts, selectLoading, selectUserToken } from 'redux/selectors';
+import {
+  selectContacts,
+  selectLoading,
+  selectUserToken,
+} from 'redux/selectors';
 import style from 'components/Apx.module.css';
 
 const PhoneBook = () => {
@@ -15,6 +19,7 @@ const PhoneBook = () => {
   const contacts = useSelector(selectContacts);
   const isLoading = useSelector(selectLoading);
   const token = useSelector(selectUserToken);
+  console.log(isLoading);
 
   useEffect(() => {
     dispatch(fetchContacts(token));
