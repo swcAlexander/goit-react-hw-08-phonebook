@@ -19,7 +19,6 @@ const PhoneBook = () => {
   const contacts = useSelector(selectContacts);
   const isLoading = useSelector(selectLoading);
   const token = useSelector(selectUserToken);
-  console.log(isLoading);
 
   useEffect(() => {
     dispatch(fetchContacts(token));
